@@ -1,0 +1,10 @@
+.sider {
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  padding: 4.4rem 1.6rem 3.2rem;
+  border-right: 1px solid #000;
+  background: var(--color-background) !important;
+  box-shadow: 8px 0px 20px 0px rgba(16, 16, 16, 0.9);
+  z-index: 1;
+}
