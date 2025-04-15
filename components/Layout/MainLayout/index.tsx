@@ -4,7 +4,12 @@ import React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { Layout, Menu } from 'antd';
 
+import SideChartsIcon from '@/assets/icons/layout/SideChartsIcon';
+import SideCountriesIcon from '@/assets/icons/layout/SideCountriesIcon';
+import TypoLogo from '@/public/images/TypoLogo.svg';
+
 import styles from './MainLayout.module.scss';
+import Image from 'next/image';
 
 const { Header, Sider, Content } = Layout;
 
@@ -38,7 +43,13 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         collapsedWidth="80"
         className={styles.sider}
       >
-        <div className={styles.logoContainer}>Logo</div>
+        <div className={styles.logoContainer}>
+          <Image
+            src={TypoLogo}
+            className={styles.logo}
+            alt="Nation Scope Logo"
+          />
+        </div>
         <Menu
           className={styles.sideMenu}
           mode="inline"
@@ -48,12 +59,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             {
               key: '/',
               label: 'Dashboard',
-              // icon: <SidebarStatisticalIcon />,
+              icon: <SideChartsIcon />,
             },
             {
               key: '/countries',
               label: 'Countries',
-              // icon: <SidebarTemplateIcon />,
+              icon: <SideCountriesIcon />,
             },
           ]}
         />

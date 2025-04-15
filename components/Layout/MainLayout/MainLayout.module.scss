@@ -1,3 +1,5 @@
+@use '../../../core/styles/mixins';
+
 .sider {
   height: 100vh;
   position: fixed;
@@ -7,4 +9,29 @@
   background: var(--color-background) !important;
   box-shadow: 8px 0px 20px 0px rgba(16, 16, 16, 0.9);
   z-index: 1;
+
+  .logoContainer {
+    width: 100%;
+    @include mixins.flex-center;
+
+    .logo {
+      width: 80%;
+      height: 4.8rem;
+      margin-bottom: 2.4rem;
+    }
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: unset;
+  padding: 5.2rem !important;
+}
+
+.headerTitle {
+  font-size: 3rem;
+  font-weight: 600;
 }
