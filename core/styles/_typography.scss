@@ -1,0 +1,24 @@
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  color: var(--color-type-primary);
+  background: var(--color-main-background);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: var(--font-family);
+}
+
+p {
+  margin: 0;
+  color: var(--color-type-primary);
+}
