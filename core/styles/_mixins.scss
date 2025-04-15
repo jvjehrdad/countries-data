@@ -1,0 +1,74 @@
+@mixin box-shadow($color: rgba(0, 0, 0, 0.1)) {
+  box-shadow: 0px 3px 20px 10px $color;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-center-column($gap: 0) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: $gap;
+}
+
+@mixin flex-center-row($gap: 0) {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: $gap;
+}
+
+@mixin flex-between-column($gap: 0) {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: $gap;
+}
+
+@mixin flex-between-row($gap: 0) {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: $gap;
+}
+
+@mixin flex-row($gap: 0) {
+  display: flex;
+  flex-direction: row;
+  gap: $gap;
+}
+
+@mixin flex-row-reverse($gap: 0) {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: $gap;
+}
+
+@mixin flex-column($gap: 0) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+@mixin flex-column-reverse($gap: 0) {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: $gap;
+}
+
+@mixin page-max-width {
+  max-width: 160rem;
+}
+
+@mixin snap-to-bottom {
+  position: absolute;
+  bottom: 0;
+}
