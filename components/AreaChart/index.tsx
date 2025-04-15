@@ -52,6 +52,7 @@ const AreaChart = () => {
   const options = {
     indexAxis: 'y' as const,
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: { position: 'top' as const },
       title: {
@@ -67,7 +68,9 @@ const AreaChart = () => {
 
   return (
     <div className={styles.container}>
-      <Bar data={data} options={options} />
+      <div className={styles.chartWrapper}>
+        <Bar data={data} options={options} />
+      </div>
     </div>
   );
 };

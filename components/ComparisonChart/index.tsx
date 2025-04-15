@@ -60,9 +60,10 @@ const ComparisonChart = () => {
   const options = {
     responsive: true,
     interaction: {
-      mode: 'index',
+      mode: 'index' as const,
       intersect: false,
     },
+    maintainAspectRatio: false,
     stacked: false,
     plugins: {
       title: {
@@ -76,18 +77,18 @@ const ComparisonChart = () => {
     },
     scales: {
       y1: {
-        type: 'linear',
+        type: 'linear' as const,
         display: true,
-        position: 'left',
+        position: 'left' as const,
         title: {
           display: true,
           text: 'Population',
         },
       },
       y2: {
-        type: 'linear',
+        type: 'linear' as const,
         display: true,
-        position: 'right',
+        position: 'right' as const,
         grid: {
           drawOnChartArea: false,
         },
@@ -101,7 +102,9 @@ const ComparisonChart = () => {
 
   return (
     <div className={styles.container}>
-      <Line data={data} options={options} />
+      <div className={styles.chartWrapper}>
+        <Line data={data} options={options} />
+      </div>
     </div>
   );
 };

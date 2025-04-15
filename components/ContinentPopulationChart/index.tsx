@@ -35,6 +35,7 @@ const ContinentPopulationChart = () => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: { position: 'top' as const },
       title: {
@@ -50,7 +51,9 @@ const ContinentPopulationChart = () => {
 
   return (
     <div className={styles.container}>
-      <Doughnut data={data} options={options} />
+      <div className={styles.chartWrapper}>
+        <Doughnut data={data} options={options} />
+      </div>
     </div>
   );
 };
