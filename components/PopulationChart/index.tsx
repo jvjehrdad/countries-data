@@ -61,6 +61,10 @@ const PopulationChart = () => {
       title: {
         display: true,
         text: '10 Countries with the Largest Population',
+        color: '#faf5fa',
+        font: {
+          size: 16,
+        },
       },
     },
   };

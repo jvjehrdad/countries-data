@@ -54,7 +54,14 @@ const AreaChart = () => {
     responsive: true,
     plugins: {
       legend: { position: 'top' as const },
-      title: { display: true, text: '10 Countries with the Largest Area' },
+      title: {
+        display: true,
+        text: '10 Countries with the Largest Area',
+        color: '#faf5fa',
+        font: {
+          size: 16,
+        },
+      },
     },
   };
 
