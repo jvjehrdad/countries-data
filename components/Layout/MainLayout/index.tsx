@@ -1,88 +1,133 @@
 'use client';
 
-import React from 'react';
-import { usePathname, useRouter } from 'next/navigation';
-import { Layout, Menu } from 'antd';
-
+import React, { useState, useEffect } from 'react';
+import { Layout, Menu, Drawer, Button } from 'antd';
+import { MenuOutlined } from '@ant-design/icons';
 import SideChartsIcon from '@/assets/icons/layout/SideChartsIcon';
 import SideCountriesIcon from '@/assets/icons/layout/SideCountriesIcon';
 import TypoLogo from '@/public/images/TypoLogo.svg';
-
 import styles from './MainLayout.module.scss';
 import Image from 'next/image';
 
+import Dashboard from '../../Dashboard';
+import Countries from '../../Countries';
+
 const { Header, Sider, Content } = Layout;
 
-interface MainLayoutProps {
-  children: React.ReactNode;
-}
+const MainLayout: React.FC = () => {
+  const [activeKey, setActiveKey] = useState('/');
+  const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const pathname = usePathname();
-  const router = useRouter();
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 992);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-  const routeHeaderMap: { [key: string]: string } = {
-    '/': 'Dashboard',
-    '/countries': 'Countries',
+  const routeMap: Record<
+    string,
+    { label: string; component: React.ReactNode }
+  > = {
+    '/': { label: 'Dashboard', component: <Dashboard /> },
+    '/countries': { label: 'Countries', component: <Countries /> },
   };
 
-  const selectedKey =
-    Object.keys(routeHeaderMap).find((key) =>
-      key !== '/' ? pathname.startsWith(key) : pathname === key,
-    ) || pathname;
-
   const handleMenuClick = (e: any) => {
-    router.push(e.key);
+    setActiveKey(e.key);
+    setMobileMenuVisible(false);
+  };
+
+  const currentRoute = routeMap[activeKey] || {
+    label: 'Center Name',
+    component: null,
   };
 
   return (
     <Layout className={styles.container}>
-      <Sider
-        width={250}
-        breakpoint="lg"
-        collapsedWidth="80"
-        className={styles.sider}
-      >
-        <div className={styles.logoContainer}>
-          <Image
-            src={TypoLogo}
-            className={styles.logo}
-            alt="Nation Scope Logo"
-          />
-        </div>
-        <Menu
-          className={styles.sideMenu}
-          mode="inline"
-          selectedKeys={[selectedKey]}
-          onClick={handleMenuClick}
-          items={[
-            {
-              key: '/',
-              label: 'Dashboard',
-              icon: <SideChartsIcon />,
-            },
-            {
-              key: '/countries',
-              label: 'Countries',
-              icon: <SideCountriesIcon />,
-            },
-          ]}
-        />
-        <div className={styles.settingsButton}>
-          <div className={styles.settingsButtonContainer}>
-            {/* <LogoutButton /> */}
+      {!isMobile && (
+        <Sider
+          width={250}
+          breakpoint="lg"
+          collapsedWidth="80"
+          className={styles.sider}
+        >
+          <div className={styles.logoContainer}>
+            <Image
+              src={TypoLogo}
+              className={styles.logo}
+              alt="Nation Scope Logo"
+            />
           </div>
-        </div>
-      </Sider>
+          <Menu
+            className={styles.sideMenu}
+            mode="inline"
+            selectedKeys={[activeKey]}
+            onClick={handleMenuClick}
+            items={[
+              {
+                key: '/',
+                label: 'Dashboard',
+                icon: <SideChartsIcon />,
+              },
+              {
+                key: '/countries',
+                label: 'Countries',
+                icon: <SideCountriesIcon />,
+              },
+            ]}
+          />
+          <div className={styles.settingsButton}>
+            <div className={styles.settingsButtonContainer}></div>
+          </div>
+        </Sider>
+      )}
 
-      <Layout className={styles.mainLayout}>
+      {isMobile && (
+        <Drawer
+          placement="left"
+          closable={false}
+          onClose={() => setMobileMenuVisible(false)}
+          open={mobileMenuVisible}
+          bodyStyle={{ padding: 10 }}
+        >
+          <Menu
+            mode="inline"
+            selectedKeys={[activeKey]}
+            onClick={handleMenuClick}
+            items={[
+              {
+                key: '/',
+                label: 'Dashboard',
+                icon: <SideChartsIcon />,
+              },
+              {
+                key: '/countries',
+                label: 'Countries',
+                icon: <SideCountriesIcon />,
+              },
+            ]}
+          />
+        </Drawer>
+      )}
+
+      <Layout
+        className={isMobile ? styles.mobileMainLayout : styles.mainLayout}
+      >
         <Header className={styles.header}>
-          <h1 className={styles.headerTitle}>
-            {routeHeaderMap[pathname] || 'Center Name'}
-          </h1>
-          <div className={styles.iconsContainer}></div>
+          <h1 className={styles.headerTitle}>{currentRoute.label}</h1>
+          {isMobile && (
+            <Button
+              type="text"
+              onClick={() => setMobileMenuVisible(true)}
+              className={styles.mobileMenuButton}
+            >
+              <MenuOutlined style={{ fontSize: '24px', color: '#fff' }} />
+            </Button>
+          )}
         </Header>
-        <Content className={styles.content}>{children}</Content>
+        <Content className={styles.content}>{currentRoute.component}</Content>
       </Layout>
     </Layout>
   );
