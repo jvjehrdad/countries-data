@@ -1,0 +1,28 @@
+{
+  "token": {
+    "fontSize": 16,
+    "borderRadius": 16,
+    "wireframe": false,
+    "colorBgBase": "#0e0f15",
+    "colorTextBase": "#faf5fa",
+    "colorPrimary": "#004cb7",
+    "colorInfo": "#004cb7"
+  },
+  "components": {
+    "Layout": {
+      "headerBg": "rgb(14,15,21)",
+      "bodyBg": "rgb(14,15,21)"
+    },
+    "Menu": {
+      "itemBorderRadius": 6,
+      "itemBg": "rgb(20,24,30)",
+      "itemSelectedBg": "rgb(14,15,21)",
+      "algorithm": true,
+      "activeBarBorderWidth": 0,
+      "itemSelectedColor": "rgb(255,255,255)"
+    }
+  },
+  "algorithm": [
+    "dark"
+  ]
+}
