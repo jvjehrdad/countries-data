@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 import { Layout, Menu } from 'antd';
 
 import SideChartsIcon from '@/assets/icons/layout/SideChartsIcon';
@@ -11,28 +10,29 @@ import TypoLogo from '@/public/images/TypoLogo.svg';
 import styles from './MainLayout.module.scss';
 import Image from 'next/image';
 
+import Dashboard from '../../Dashboard';
+import Countries from '../../Countries';
+
 const { Header, Sider, Content } = Layout;
 
-interface MainLayoutProps {
-  children: React.ReactNode;
-}
+const MainLayout: React.FC = () => {
+  const [activeKey, setActiveKey] = useState('/');
 
-const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const pathname = usePathname();
-  const router = useRouter();
-
-  const routeHeaderMap: { [key: string]: string } = {
-    '/': 'Dashboard',
-    '/countries': 'Countries',
+  const routeMap: Record<
+    string,
+    { label: string; component: React.ReactNode }
+  > = {
+    '/': { label: 'Dashboard', component: <Dashboard /> },
+    '/countries': { label: 'Countries', component: <Countries /> },
   };
 
-  const selectedKey =
-    Object.keys(routeHeaderMap).find((key) =>
-      key !== '/' ? pathname.startsWith(key) : pathname === key,
-    ) || pathname;
-
   const handleMenuClick = (e: any) => {
-    router.push(e.key);
+    setActiveKey(e.key);
+  };
+
+  const currentRoute = routeMap[activeKey] || {
+    label: 'Center Name',
+    component: null,
   };
 
   return (
@@ -53,7 +53,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <Menu
           className={styles.sideMenu}
           mode="inline"
-          selectedKeys={[selectedKey]}
+          selectedKeys={[activeKey]}
           onClick={handleMenuClick}
           items={[
             {
@@ -69,20 +69,16 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           ]}
         />
         <div className={styles.settingsButton}>
-          <div className={styles.settingsButtonContainer}>
-            {/* <LogoutButton /> */}
-          </div>
+          <div className={styles.settingsButtonContainer}></div>
         </div>
       </Sider>
 
       <Layout className={styles.mainLayout}>
         <Header className={styles.header}>
-          <h1 className={styles.headerTitle}>
-            {routeHeaderMap[pathname] || 'Center Name'}
-          </h1>
+          <h1 className={styles.headerTitle}>{currentRoute.label}</h1>
           <div className={styles.iconsContainer}></div>
         </Header>
-        <Content className={styles.content}>{children}</Content>
+        <Content className={styles.content}>{currentRoute.component}</Content>
       </Layout>
     </Layout>
   );

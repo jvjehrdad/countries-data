@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 4.4rem 4.4rem 2.4rem;
+  gap: 2.4rem;
+  .chartContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.4rem;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    padding: 0 2.4rem 2.4rem 6.4rem;
+    .chartContainer {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+}
