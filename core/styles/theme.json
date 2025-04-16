@@ -37,6 +37,11 @@
     },
     "Pagination": {
       "borderRadius": 10
+    },
+    "Card": {
+      "headerBg": "rgb(28,32,41)",
+      "colorBgContainer": "rgb(20,24,30)",
+      "colorBorderSecondary": "rgb(14,15,21)"
     }
   },
   "algorithm": [

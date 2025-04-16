@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
-import { Table, Input } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Table, Input, Card, Row, Col, Pagination } from 'antd';
 import HomeSearchIcon from '@/assets/icons/countries/HomeSearchIcon';
 import styles from './Countries.module.scss';
 
 const Countries = () => {
-  const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const dataSource = [
     {
@@ -170,7 +180,11 @@ const Countries = () => {
     },
   ];
 
-  // تعریف ستون‌های جدول
+  const currentData = dataSource.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize,
+  );
+
   const columns = [
     {
       title: 'Flag',
@@ -200,18 +214,13 @@ const Countries = () => {
       title: 'Area (km²)',
       dataIndex: 'area',
       key: 'area',
-      render: (area: string) => area.toLocaleString(),
+      render: (area: number) => area.toLocaleString(),
     },
   ];
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
-
-  const currentData = dataSource.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize,
-  );
 
   return (
     <div className={styles.container}>
@@ -222,17 +231,61 @@ const Countries = () => {
           placeholder="Search countries"
         />
       </div>
-      <Table
-        dataSource={currentData}
-        columns={columns}
-        pagination={{
-          current: currentPage,
-          pageSize: pageSize,
-          total: dataSource.length,
-          onChange: handlePageChange,
-        }}
-        rowKey="key"
-      />
+      {isMobile ? (
+        <div className={styles.cardsContainer}>
+          <Row gutter={[16, 16]}>
+            {currentData.map((country) => (
+              <Col xs={24} key={country.key}>
+                <Card className={styles.card} hoverable>
+                  <div className={styles.cardHeader}>
+                    <h2>{country.name}</h2>
+                    <img
+                      src={country.flag}
+                      alt={`${country.name} flag`}
+                      className={styles.flag}
+                    />
+                  </div>
+                  <div className={styles.cardBody}>
+                    <div className={styles.infoGrid}>
+                      <div className={styles.infoItem}>
+                        <span className={styles.label}>Capital:</span>
+                        <span>{country.capital}</span>
+                      </div>
+                      <div className={styles.infoItem}>
+                        <span className={styles.label}>Population:</span>
+                        <span>{country.population.toLocaleString()}</span>
+                      </div>
+                      <div className={styles.infoItem}>
+                        <span className={styles.label}>Area:</span>
+                        <span>{country.area.toLocaleString()} km²</span>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+          <Pagination
+            current={currentPage}
+            pageSize={pageSize}
+            total={dataSource.length}
+            onChange={handlePageChange}
+            style={{ marginTop: '16px', textAlign: 'center' }}
+          />
+        </div>
+      ) : (
+        <Table
+          dataSource={currentData}
+          columns={columns}
+          pagination={{
+            current: currentPage,
+            pageSize: pageSize,
+            total: dataSource.length,
+            onChange: handlePageChange,
+          }}
+          rowKey="key"
+        />
+      )}
     </div>
   );
 };
