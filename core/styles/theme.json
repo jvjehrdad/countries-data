@@ -20,6 +20,9 @@
       "algorithm": true,
       "activeBarBorderWidth": 0,
       "itemSelectedColor": "rgb(255,255,255)"
+    },
+    "Drawer": {
+      "colorBgElevated": "rgb(20,24,30)"
     }
   },
   "algorithm": [
