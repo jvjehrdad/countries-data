@@ -1,17 +1,50 @@
 'use client';
 
 import React, { useState, useLayoutEffect } from 'react';
+import Image from 'next/image';
 import { Layout, Menu, Drawer, Button } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import SideChartsIcon from '@/assets/icons/layout/SideChartsIcon';
 import SideCountriesIcon from '@/assets/icons/layout/SideCountriesIcon';
 import TypoLogo from '@/public/images/TypoLogo.svg';
-import styles from './MainLayout.module.scss';
-import Image from 'next/image';
 import Dashboard from '../../Dashboard';
 import Countries from '../../Countries';
+import styles from './MainLayout.module.scss';
 
 const { Header, Sider, Content } = Layout;
+
+const SidebarContent: React.FC<{
+  activeKey: string;
+  handleMenuClick: (e: any) => void;
+  isMobile?: boolean;
+}> = ({ activeKey, handleMenuClick, isMobile = false }) => {
+  return (
+    <>
+      <div className={styles.logoContainer}>
+        <Image src={TypoLogo} className={styles.logo} alt="Nation Scope Logo" />
+      </div>
+      <Menu
+        className={styles.sideMenu}
+        mode="inline"
+        selectedKeys={[activeKey]}
+        onClick={handleMenuClick}
+        items={[
+          { key: '/', label: 'Dashboard', icon: <SideChartsIcon /> },
+          {
+            key: '/countries',
+            label: 'Countries',
+            icon: <SideCountriesIcon />,
+          },
+        ]}
+      />
+      {!isMobile && (
+        <div className={styles.settingsButton}>
+          <div className={styles.settingsButtonContainer}></div>
+        </div>
+      )}
+    </>
+  );
+};
 
 const MainLayout: React.FC = () => {
   const [mounted, setMounted] = useState(false);
@@ -56,52 +89,25 @@ const MainLayout: React.FC = () => {
           collapsedWidth="80"
           className={styles.sider}
         >
-          <div className={styles.logoContainer}>
-            <Image
-              src={TypoLogo}
-              className={styles.logo}
-              alt="Nation Scope Logo"
-            />
-          </div>
-          <Menu
-            className={styles.sideMenu}
-            mode="inline"
-            selectedKeys={[activeKey]}
-            onClick={handleMenuClick}
-            items={[
-              { key: '/', label: 'Dashboard', icon: <SideChartsIcon /> },
-              {
-                key: '/countries',
-                label: 'Countries',
-                icon: <SideCountriesIcon />,
-              },
-            ]}
+          <SidebarContent
+            activeKey={activeKey}
+            handleMenuClick={handleMenuClick}
           />
-          <div className={styles.settingsButton}>
-            <div className={styles.settingsButtonContainer}></div>
-          </div>
         </Sider>
       )}
       {isMobile && (
         <Drawer
           placement="left"
+          width={'80%'}
           closable={false}
           onClose={() => setMobileMenuVisible(false)}
           open={mobileMenuVisible}
-          bodyStyle={{ padding: 10 }}
+          bodyStyle={{ padding: 16 }}
         >
-          <Menu
-            mode="inline"
-            selectedKeys={[activeKey]}
-            onClick={handleMenuClick}
-            items={[
-              { key: '/', label: 'Dashboard', icon: <SideChartsIcon /> },
-              {
-                key: '/countries',
-                label: 'Countries',
-                icon: <SideCountriesIcon />,
-              },
-            ]}
+          <SidebarContent
+            activeKey={activeKey}
+            handleMenuClick={handleMenuClick}
+            isMobile
           />
         </Drawer>
       )}

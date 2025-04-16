@@ -10,15 +10,6 @@
     background: var(--color-background) !important;
     box-shadow: 8px 0px 20px 0px rgba(16, 16, 16, 0.9);
     z-index: 1;
-    .logoContainer {
-      width: 100%;
-      @include mixins.flex-center;
-      .logo {
-        width: 80%;
-        height: 4.8rem;
-        margin-bottom: 3.2rem;
-      }
-    }
   }
 
   .header {
@@ -48,6 +39,15 @@
   margin-left: 0;
 }
 
+.logoContainer {
+  width: 100%;
+  @include mixins.flex-center;
+  .logo {
+    width: 80%;
+    height: 4.8rem;
+    margin-bottom: 3.2rem;
+  }
+}
 @media screen and (max-width: 992px) {
   .container {
     .sider {
@@ -60,6 +60,16 @@
 
     .header {
       padding: 1.6rem !important;
+    }
+  }
+  .logoContainer {
+    width: 100%;
+    justify-content: start;
+    padding: 1.6rem;
+    .logo {
+      width: fit-content;
+      height: 4.8rem;
+      margin-bottom: unset;
     }
   }
 }
