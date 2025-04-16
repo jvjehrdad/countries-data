@@ -1,0 +1,70 @@
+@use '../../core/styles/mixins';
+
+.container {
+  padding: 0 3.2rem;
+  @include mixins.flex-column;
+  gap: 2.4rem;
+
+  .searchContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .searchInput {
+      background-color: var(--color-background) !important;
+      width: 100%;
+    }
+  }
+
+  .card {
+    width: 100%;
+
+    .cardHeader {
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+      img.flag {
+        width: 20rem;
+        height: 4rem;
+        height: auto;
+        border-radius: 4px;
+      }
+
+      h3 {
+        margin: 0;
+        font-size: 1.2rem;
+        color: var(--color-type-primary);
+      }
+    }
+
+    .cardBody {
+      padding-top: 1rem;
+
+      .infoGrid {
+        .infoItem {
+          margin-bottom: 0.8rem;
+        }
+      }
+
+      p {
+        margin: 0.5rem 0;
+        font-size: 0.95rem;
+        color: var(--color-textSecondary, #555);
+
+        strong {
+          color: var(--color-text, #333);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1.6rem 2.4rem;
+    gap: 1.6rem;
+  }
+}
