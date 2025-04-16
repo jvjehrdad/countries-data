@@ -12,9 +12,17 @@
 
 @media screen and (max-width: 1200px) {
   .container {
-    padding: 1.6rem;
+    padding: 0 1.6rem 1.6rem;
     .chartContainer {
       grid-template-columns: repeat(1, 1fr);
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .container {
+    .chartContainer {
+      gap: 0.8rem;
     }
   }
 }

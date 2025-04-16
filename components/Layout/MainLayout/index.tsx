@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { Layout, Menu, Drawer, Button } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import SideChartsIcon from '@/assets/icons/layout/SideChartsIcon';
@@ -8,23 +8,26 @@ import SideCountriesIcon from '@/assets/icons/layout/SideCountriesIcon';
 import TypoLogo from '@/public/images/TypoLogo.svg';
 import styles from './MainLayout.module.scss';
 import Image from 'next/image';
-
 import Dashboard from '../../Dashboard';
 import Countries from '../../Countries';
 
 const { Header, Sider, Content } = Layout;
 
 const MainLayout: React.FC = () => {
+  const [mounted, setMounted] = useState(false);
   const [activeKey, setActiveKey] = useState('/');
   const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    setMounted(true);
     const handleResize = () => setIsMobile(window.innerWidth < 992);
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  if (!mounted) return null;
 
   const routeMap: Record<
     string,
@@ -66,11 +69,7 @@ const MainLayout: React.FC = () => {
             selectedKeys={[activeKey]}
             onClick={handleMenuClick}
             items={[
-              {
-                key: '/',
-                label: 'Dashboard',
-                icon: <SideChartsIcon />,
-              },
+              { key: '/', label: 'Dashboard', icon: <SideChartsIcon /> },
               {
                 key: '/countries',
                 label: 'Countries',
@@ -83,7 +82,6 @@ const MainLayout: React.FC = () => {
           </div>
         </Sider>
       )}
-
       {isMobile && (
         <Drawer
           placement="left"
@@ -97,11 +95,7 @@ const MainLayout: React.FC = () => {
             selectedKeys={[activeKey]}
             onClick={handleMenuClick}
             items={[
-              {
-                key: '/',
-                label: 'Dashboard',
-                icon: <SideChartsIcon />,
-              },
+              { key: '/', label: 'Dashboard', icon: <SideChartsIcon /> },
               {
                 key: '/countries',
                 label: 'Countries',
@@ -111,7 +105,6 @@ const MainLayout: React.FC = () => {
           />
         </Drawer>
       )}
-
       <Layout
         className={isMobile ? styles.mobileMainLayout : styles.mainLayout}
       >
