@@ -1,0 +1,13 @@
+@use '../../core/styles/mixins';
+.container {
+  padding: 0 3.2rem;
+  @include mixins.flex-column;
+  gap: 2.4rem;
+  .searchContainer {
+    width: 100%;
+
+    .searchInput {
+      background-color: var(--color-background) !important;
+    }
+  }
+}

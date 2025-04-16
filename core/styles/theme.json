@@ -23,6 +23,20 @@
     },
     "Drawer": {
       "colorBgElevated": "rgb(20,24,30)"
+    },
+    "Input": {
+      "borderRadius": 10,
+      "controlHeight": 44,
+      "controlHeightLG": 52,
+      "activeBg": "rgb(28,32,41)"
+    },
+    "Table": {
+      "borderColor": "rgb(112,112,118)",
+      "headerBg": "rgb(28,32,41)",
+      "colorBgContainer": "rgb(20,24,30)"
+    },
+    "Pagination": {
+      "borderRadius": 10
     }
   },
   "algorithm": [
